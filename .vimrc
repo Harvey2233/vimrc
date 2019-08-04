@@ -159,6 +159,11 @@ func VimBaseSetting()
     nnoremap <leader>wh :sp<CR>
     nnoremap <leader>wv :vsp<CR>
     nnoremap <S-w> <C-w>w<CR>"
+
+    set cursorcolumn
+    set cursorline
+    highlight CursorLine   cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
+    highlight CursorColumn cterm=NONE ctermbg=black ctermfg=green guibg=NONE guifg=NONE
 endfunc
 
 " tarbar 相关配置 "
