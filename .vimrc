@@ -51,7 +51,25 @@ Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/nerdtree'
 Bundle 'chxuan/change-colorscheme'
 "Bundle 'Valloric/YouCompleteMe', { 'do': 'python3 install.py --clang-completer',  'for': ['c', 'cpp'] }
-"Bundle 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer',  'for': ['c', 'cpp']  }
+Bundle 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer',  'for': ['c', 'cpp']  }
+" 若安装失败请用以下步骤尝试 "
+" rm ~/.vim/bundle/YouCompleteMe -rf
+" git clone https://gitee.com/mirrors/youcompleteme.git
+" mv youcompleteme YouCompleteMe
+" cd YouCompleteMe/
+" python3 install.py --clang-completer
+" 若提示错误：git submodule update --init --recursive
+" 若遇到third_party/ycmd/third_party/go/src/golang.org/x/tools因谷歌无法访问报错
+" cd third_party/ycmd/third_party/go/src/golang.org/x/
+" rm tools/
+" git clone https://github.com/golang/tools.git
+" cd YouCompleteMe/
+" git submodule update --init --recursive继续sync
+" sync完毕后，继续尝试编译 python3 install.py --clang-completer
+" 若遇到YouCompleteMe/third_party/ycmd/third_party/cregex" does not appear to contain CMakeLists.txt."此错误
+" rm -rf YouCompleteMe/third_party/ycmd/third_party/cregex
+" git submodule update --init --recursive
+" 继续重编python3 install.py --clang-completer
 Bundle 'Xuyuanp/nerdtree-git-plugin'
 Bundle 'vim-airline/vim-airline'
 Bundle 'vim-airline/vim-airline-themes'
@@ -122,14 +140,19 @@ func VimBaseSetting()
     nnoremap <c-left> <c-w><
     nnoremap <c-right> <c-w>>
 
+    nnoremap <c-h> <c-w>h
+    nnoremap <c-j> <c-w>j
+    nnoremap <c-k> <c-w>k
+    nnoremap <c-l> <c-w>l
+
     nnoremap <F5> :!ctags -R --languages=c,c++<cr>
-    
+
     " MAPPING BUFFER "
-    nnoremap <leader>ba :babd 
-    nnoremap <leader>bq :bd 
+    nnoremap <leader>ba :babd
+    nnoremap <leader>bq :bd
     nnoremap <S-b> :b
     " MAPPING TAB "
-    nnoremap <leader>ta :tabe 
+    nnoremap <leader>ta :tabe
     nnoremap <leader>tq :tabc<CR>
     nnoremap <S-t> gT
     " MAPPING WINDOW "
@@ -185,7 +208,31 @@ endfunc
 
 func YcmSetting()
     let g:ycm_server_python_interpreter='/usr/bin/python3'
-    let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+    let g:ycm_add_preview_to_completeopt = 0
+    let g:ycm_show_diagnostics_ui = 0
+    let g:ycm_server_log_level = 'info'
+    let g:ycm_min_num_identifier_candidate_chars = 2
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+    let g:ycm_complete_in_strings=1
+    let g:ycm_key_invoke_completion = '<c-x>'
+    set completeopt=menu,menuone
+
+    noremap <c-x> <NOP>
+
+    let g:ycm_semantic_triggers =  {
+                \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+                \ 'cs,lua,javascript': ['re!\w{2}'],
+                \ }
+
+    let g:ycm_filetype_whitelist = {
+                \ "c":1,
+                \ "cpp":1,
+                \ "objc":1,
+                \ "sh":1,
+                \ "zsh":1,
+                \ "zimbu":1,
+                \ }
 endfunc
 
 func UndotreeSetting()
@@ -350,7 +397,7 @@ call AgSetting()
 call NerdcommenterSetting()
 call SyntasticSetting()
 call VimNerdtreeTabSetting()
-"call YcmSetting()
+call YcmSetting()
 call ChangesPluginSetting()
 call VimIndentGuidesSetting()
 call VimTrailingWhitespaceSetting()
