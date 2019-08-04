@@ -93,6 +93,7 @@ Bundle 'tpope/vim-repeat'
 Bundle 'godlygeek/tabular'
 Bundle 'easymotion/vim-easymotion'
 Bundle 'Shougo/echodoc.vim'
+Bundle 'altercation/vim-colors-solarized'
 call vundle#end()
 
 " vim的基础配置 "
@@ -387,6 +388,12 @@ func EchodocSetting()
     let g:echodoc_enable_at_startup = 1
 endfunc
 
+func VimColorsSolarizedSetting()
+    syntax enable
+    set background=dark
+    colorscheme solarized
+endfunc
+
 let mapleader=','			" 设置Leader键为, "
 
 " 调用相关配置函数 "
@@ -411,3 +418,4 @@ call DoxygenToolkitSetting()
 call VimMultipleCursors()
 call VimEasymotionSetting()
 call EchodocSetting()
+call VimColorsSolarizedSetting()
